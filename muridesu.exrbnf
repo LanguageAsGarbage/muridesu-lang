@@ -1,0 +1,148 @@
+START : <BOF> stmts <EOF> { Module($1) } ;
+
+Name  : <ID> { loc(@0, Name(*$0)) } ;
+Ident : <ID> { *$0 };
+
+names : separated_list(',', Name)  { $0 } ;
+
+arg : <ID> { loc(@0, arg(*$0, None)) };
+
+args : '(' separated_list(',', arg) ')' { arguments($1, None, [], [], None, []) }
+     | '(' ')'       { arguments([], None, [], [], None, []) }
+     ;
+
+
+stmts : list(stmt) { $0 };
+exprs : separated_list(',', expr) { $0 };
+
+classhead : 'class'               { [] }
+          | 'meta' expr 'class'   { keyword(METACLASS, $1) }
+          ;
+
+withitem : expr 'as' expr { withitem(as_load($0), as_store($2)) };
+
+block : '{' stmts '}' { $1 }
+      | '{' '}'       { [] }
+      ;
+
+dotted_name : separated_list('.', Ident) { join_string_by_dot($0) } ;
+
+import_alias : dotted_name 'as' Ident { alias($0, $2) } ;
+
+except_handler  : 'catch' expr 'as' Ident block { loc(@0, ExceptHandler(as_load($1), $3, $4)) }
+                | 'catch' expr block            { loc(@0, ExceptHandler(as_load($1), None, $3)) }
+                ;
+
+stmt : 'func' Ident args block               { loc(@0, FunctionDef($1, $2, $3, [], None)) }
+      | 'if' expr block 'else' block         { loc(@0, If(as_load($1), $2, $4)) }
+      | classhead Ident '<:' exprs block     { loc(@2, ClassDef($1, list_(map(as_load, $3)), $0, $4, [])) }
+      | classhead <ID> block                { loc(@1, ClassDef(*$1, [], $0, $2, [])) }
+      | 'return' exprs                       { loc(@0, Return(as_load(tuple_if_more_than_1($1)))) }
+      | 'return'                             { loc(@0, Return(Constant(None))) }
+      | 'while' expr stmts                   { loc(@0, While(as_load($1), $2, [])) }
+      | 'for' separated_list(',', atom) 'in' expr block          { loc(@0, For(as_store(tuple_if_more_than_1($1)), as_load($3), $4, [])) }
+      | 'with' separated_list(',', withitem) block  { loc(@0, With($1, $2)) }
+      | 'break'                                     { loc(@0, Break()) }
+      | 'continue'                                  { loc(@0, Continue()) }
+      | 'assert' expr                               { loc(@0, Assert(as_load($1), None)) }
+      | 'import' separated_list(',', import_alias)  { loc(@0, Import($1)) }
+      | 'global' separated_list(',', Ident)         { loc(@0, Global($1)) }
+      | 'nonlocal' separated_list(',', Ident)       { loc(@0, Nonlocal($1)) }
+      | 'raise' expr                                { loc(@0, Raise(as_load($1))) }
+      | 'try' block list(except_handler)            { loc(@0, Try($1, $2, [], [])) }
+      | 'try' block list(except_handler) 'finally' block { loc(@0, Try($1, $2, [], $4)) }
+      | expr                                             { Expr(as_load($0)) }
+      | expr '=' expr                                    { Assign([as_store($0)], as_load($2)) }
+      ;
+
+
+expr  : 'fn' args  '->' expr                         { loc(@0, Lambda($1, $2)) }
+      | expr 'if' expr 'else' expr                   { loc(@1, IfExp($0, $2, $4)) }
+      | or                                           { $0 }
+      ;
+
+or : or 'or' and                       { BoolOp(Or(), [$0, $2]) }
+   | and                               { $0 }
+   ;
+
+and : and 'and' not                       { BoolOp(And(), [$0, $2]) }
+    | not                                 { $0 }
+    ;
+
+not : cmp       { $0 }
+    | 'not' not { loc(@0, UnaryOp(Not(), $1)) }
+    ;
+
+cmpop : '<' { Lt() }
+      | '>' { Gt() }
+      |  '==' { Eq() }
+      |  '>=' { Ge() }
+      |  '<=' { Le() }
+      |  '!=' { Ne() }
+      |  'in' { In() }
+      | 'not' 'in' { NotIn() }
+      | 'is' { Is() }
+      | 'is' 'not' { IsNot() }
+      ;
+
+cmp : cmp cmpop bin { Compare($0, [$1], [$2]) }
+    | bin           { $0 }
+    ;
+
+binop : '*' { Mult() }
+      | '@' { MatMult() }
+      | '/' { Div() }
+      | '%' { Mod() }
+      | '//' { FloorDiv() }
+      | '+'  { Add() }
+      | '-'  { Sub() }
+      | '|'  { BitOr() }
+      | '^'  { BitXor() }
+      | '&'  { BitAnd() }
+      | '>>' { RShift() }
+      | '<<' { LShift() }
+      | '**'  { Pow() }
+      ;
+
+
+bin : bin binop factor { BinOp($0, $1, $2) }
+    | factor { $0 }
+    ;
+
+factor : '-' factor { loc(@0, UnaryOp(USub(), $1)) }
+       | '~' factor { loc(@0, UnaryOp(Invert(), $1)) }
+       | yield { $0 }
+       ;
+
+
+yield :
+    | 'yield' expr               { loc(@0, Yield(tuple_if_more_than_1($1))) }
+    | 'yield' 'from' expr        { loc(@0, YieldFrom($2)) }
+    | atom                       { $0 }
+    ;
+
+tuple_tail : ',' ')' { True }
+           | ')'     { False }
+           ;
+
+list_tail : ',' ']'
+          | ']'
+          ;
+
+atom : Name           { $0 }
+     | <INT>    { loc(@0, Constant(int(*$0))) }
+     | <FLOAT>  { loc(@0, Constant(float(*$0))) }
+     | <STRING> { loc(@0, Constant(DQString(*$0))) }
+     | '(' exprs tuple_tail { loc(@0, mk_tuple($1, $2)) }
+     | '[' exprs list_tail  { loc(@0, List($1)) }
+     | '(' ')'                                  { loc(@0, Tuple([])) }
+     | '[' ']'                                  { loc(@0, List([])) }
+     | '...'                                    { loc(@0, Ellipsis()) }
+     | 'None'                                   { loc(@0, Constant(None)) }
+     | 'True'                                   { loc(@0, Constant(True)) }
+     | 'False'                                  { loc(@0, Constant(False)) }
+     | atom '.' '[' exprs ']'                   { loc(@1, Subscript($0, Index(tuple_if_more_than_1($3))))}
+     | atom '.' Ident                           { loc(@1, Attribute($0, $2)) }
+     | atom '(' exprs ')'                       { loc(@1, Call($0, $2, [])) }
+     | atom '(' ')'                             { loc(@1, Call($0, [], [])) }
+     ;

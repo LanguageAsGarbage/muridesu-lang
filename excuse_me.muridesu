@@ -1,0 +1,22 @@
+func f(x, seq){
+    for i in seq
+    {
+        print(i + x)
+    }
+}
+
+f(1, [2, 3, 4])
+
+class A {
+    func f(self){
+        print("A")
+    }
+}
+class S <: A {
+    func g(self){
+        print("S")
+    }
+}
+
+S().g()
+S().f()

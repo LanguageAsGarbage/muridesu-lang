@@ -1,0 +1,25 @@
+COMMENT #[^\n\r]*
+
+FLOAT [-+]?[0-9]+\.\d+([eE][-+]?\d+)?|[-+]?[0-9]+[eE][-+]?\d+
+INT [-+]?\d+
+ID [a-zA-Z_\u4e00-\u9fa5][a-zA-Z0-9_\u4e00-\u9fa5]*'?
+STRING "([^\\"]+|\\.)*?"|'([^\\']+|\\.)*?'
+
+W \s+
+%ignore W
+%ignore COMMENT
+
+%require loc
+%require DQString
+%require METACLASS
+%require join_string_by_dot
+%require as_load
+%require as_store
+%require tuple_if_more_than_1
+%require mk_tuple
+%require list_
+
+
+
+
+
