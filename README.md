@@ -78,7 +78,7 @@ A
 - 解构`(a, b, [c, d, (f, g, h)]) = ...`
 
 表达式:
-- lambda: `fn args... -> expr`
+- lambda: `fn args... -> expr`, lambda 返回值可以是一个block`fn (x) -> { ...; return ...}`.
 - bool表达式 `and, or, not`
 - 比较: `<, >, ...`(Python所有的)
 - 二元运算(Python所有的, 懒得实现优先级了, 毕竟这只是个迫害项目)
