@@ -21,5 +21,20 @@ class S <: A {
 S().g()
 S().f()
 
+func test_precedence_and_assoc() {
+    x = 7
+    y = 2
+    z = 3
+    return x + y * 3 ** z
+}
+
+print(test_precedence_and_assoc() == 61)
+
 print(set [1, 2, 3, 4, 5])
 print(dict [1 => 2, 3 => 4])
+
+import array, reshape  from numpy
+
+x = array [1, 2, 3, 4]
+print(x)
+print(reshape(x, (2, 2)))
