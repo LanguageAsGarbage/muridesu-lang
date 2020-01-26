@@ -19,6 +19,10 @@ W \s+
 %require mk_tuple
 %require list_
 
+%require bin_reduce
+%require extend
+%require Operator
+
 
 
 

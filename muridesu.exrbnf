@@ -89,25 +89,30 @@ cmp : cmp cmpop bin { Compare($0, [$1], [$2]) }
     | bin           { $0 }
     ;
 
-binop : '*' { Mult() }
-      | '@' { MatMult() }
-      | '/' { Div() }
-      | '%' { Mod() }
-      | '//' { FloorDiv() }
-      | '+'  { Add() }
-      | '-'  { Sub() }
-      | '|'  { BitOr() }
-      | '^'  { BitXor() }
-      | '&'  { BitAnd() }
-      | '>>' { RShift() }
-      | '<<' { LShift() }
-      | '**'  { Pow() }
+binop : ('*'
+      | '@'
+      | '/'
+      | '%'
+      | '//'
+      | '+'
+      | '-'
+      | '|'
+      | '^'
+      | '&'
+      | '>>'
+      | '<<'
+      | '**'
+      | '=>'
+      ) { Operator(*$0) }
       ;
 
+bin    : bin_lst { bin_reduce($0) };
 
-bin : bin binop factor { BinOp($0, $1, $2) }
-    | factor { $0 }
-    ;
+bin_right : binop factor  { ($0, $1) };
+
+bin_lst : bin_lst bin_right     { extend($0, $1) }
+        | factor                { [$0] }
+        ;
 
 factor : '-' factor { loc(@0, UnaryOp(USub(), $1)) }
        | '~' factor { loc(@0, UnaryOp(Invert(), $1)) }
@@ -145,4 +150,7 @@ atom : Name           { $0 }
      | atom '.' Ident                           { loc(@1, Attribute($0, $2)) }
      | atom '(' exprs ')'                       { loc(@1, Call($0, $2, [])) }
      | atom '(' ')'                             { loc(@1, Call($0, [], [])) }
+     | Name <STRING>                            { loc(@1, Call($0, [Constant(DQString(*$1))], [])) }
+     | Name '[' exprs list_tail                 { loc(@1, Call($0, [List($2)], [])) }
+     | Name '[' ']'                             { loc(@1, Call($0, [], [])) }
      ;

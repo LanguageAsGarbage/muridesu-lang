@@ -76,7 +76,8 @@ A
 - 二元运算(Python所有的, 懒得实现优先级了, 毕竟这只是个迫害项目)
 - 单目运算(`-`, `~`)
 - `yield`, `yield from`
-- 其他的Python字面量, 除了dict, set和各种comprehensions
+- `set`, `dict`没有字面量, 但参考julia, 引入广泛可扩展的构造方式: `set [1, 2, 3]`, `dict [1 => 2, 2 => 3]`.
+- 其他的Python字面量, 除comprehensions
 
 注: Python中的`a[b]`在muridesu中是`a.[b]`, 因为我的想法是`A[b, c, d]`表示`A_list([b, c, d])`, `A"string"`表示`A_str("string")`.
 

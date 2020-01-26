@@ -1,5 +1,6 @@
-import ast
 from rbnf_rts.routine import DQString
+from remu_operator import Operator, binop_reduce
+import ast
 
 METACLASS = 'metaclass'
 
@@ -68,3 +69,61 @@ def loc(loc, n):
 
 
 list_ = list
+
+binop_cls = {
+    "*": ast.Mult,
+    "@": ast.MatMult,
+    "/": ast.Div,
+    "%": ast.Mod,
+    "//": ast.FloorDiv,
+    "+": ast.Add,
+    "-": ast.Sub,
+    "|": ast.BitOr,
+    "^": ast.BitXor,
+    "&": ast.BitAnd,
+    ">>": ast.RShift,
+    "<<": ast.LShift,
+    "**": ast.Pow
+}
+
+binop_precendences = {
+    "**": 7,
+    '*': 6,
+    "@": 6,
+    "/": 6,
+    "%": 6,
+    "//": 6,
+    "+": 4,
+    "-": 4,
+    "<<": 2,
+    ">>": 2,
+    "&": 0,
+    "^": -2,
+    "|": -4,
+    '=>': -42
+}
+
+right_bin_ops = {'^', '**', '=>'}
+
+bin_op_assoc = {k: k in right_bin_ops for k, _ in binop_precendences.items()}
+_extend = list.extend
+
+
+def extend(a, b):
+    _extend(a, b)
+    return a
+
+
+def bin_reduce(lst):
+    if len(lst) is 1:
+        return lst[0]
+
+    def construct(v):
+        if v == '=>':
+            return lambda lhs, rhs: ast.Tuple([lhs, rhs])
+        return lambda lhs, rhs: ast.BinOp(lhs, binop_cls[v](), rhs)
+
+    return binop_reduce(construct,
+                        lst,
+                        precedences=binop_precendences,
+                        associativities=bin_op_assoc)

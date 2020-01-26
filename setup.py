@@ -36,7 +36,7 @@ setup(
     entry_points={"console_scripts": ["muridesu=muridesu.cli:main"]},
     # above option specifies commands to be installed,
     # e.g: entry_points={"console_scripts": ["yapypy=yapypy.cmd.compiler"]}
-    install_requires=["devpackage", 'argser', 'rbnf-rts'],
+    install_requires=["devpackage", 'argser', 'rbnf-rts', 'remu-operator'],
     platforms="any",
     classifiers=[
         "Programming Language :: Python :: 3.6",
