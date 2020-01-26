@@ -38,3 +38,26 @@ import array, reshape  from numpy
 x = array [1, 2, 3, 4]
 print(x)
 print(reshape(x, (2, 2)))
+
+try {
+    1/0
+}
+catch Exception {
+    print("goodo")
+}
+
+
+
+try {
+    1/0
+}
+catch IOError {
+    print("bado")
+}
+catch Exception as e{
+    print("is goodo?:", isinstance(e, ZeroDivisionError))
+
+}
+finally {
+    print("parfecdo!")
+}

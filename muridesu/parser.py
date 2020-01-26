@@ -5646,7 +5646,7 @@ def mk_parser(loc, DQString, METACLASS, join_string_by_dot, as_load, as_store, t
                             lcl_6 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
                             lcl_7 = _slot_1
                             lcl_7 = as__load(lcl_7)
-                            lcl_8 = _slot_3
+                            lcl_8 = _slot_2
                             lcl_7 = ExceptHandler(lcl_7, None, lcl_8)
                             lcl_6 = loc(lcl_6, lcl_7)
                             _slot_local__1 = lcl_6
