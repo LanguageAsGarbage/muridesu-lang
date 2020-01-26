@@ -81,7 +81,7 @@ A
 - lambda: `fn args... -> expr`, lambda 返回值可以是一个block`fn (x) -> { ...; return ...}`.
 - bool表达式 `and, or, not`
 - 比较: `<, >, ...`(Python所有的)
-- 二元运算(Python所有的, 懒得实现优先级了, 毕竟这只是个迫害项目)
+- 二元运算，包括优先级结合性。~~打钱就加自定义结合性和优先级~~
 - 单目运算(`-`, `~`)
 - `yield`, `yield from`
 - `set`, `dict`没有字面量, 但参考julia, 引入广泛可扩展的构造方式: `set [1, 2, 3]`, `dict [1 => 2, 2 => 3]`.
