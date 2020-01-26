@@ -23,6 +23,7 @@ W \s+
 %require extend
 %require Operator
 
+%require Lift
 
 
 

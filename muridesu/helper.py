@@ -127,3 +127,61 @@ def bin_reduce(lst):
                         lst,
                         precedences=binop_precendences,
                         associativities=bin_op_assoc)
+
+
+class Lift(ast.AST):
+    _fields = ('lam', )
+    lam: ast.Lambda
+
+    def __init__(self, lam, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.lam = lam
+
+
+class Lifting(ast.NodeTransformer):
+    def __init__(self):
+        self.lifted = []
+        self.cnt = 0
+
+    def generic_visit(self, node):
+        for field, old_value in ast.iter_fields(node):
+            if isinstance(old_value, list):
+                old_lifted, new_values = self.lifted, []
+                if field == 'body' and isinstance(
+                        node, (ast.Module, ast.FunctionDef)):
+                    self.lifted = new_values
+
+                for value in old_value:
+                    if isinstance(value, ast.AST):
+                        value = self.visit(value)
+                        if value is None:
+                            continue
+                        elif not isinstance(value, ast.AST):
+                            new_values.extend(value)
+                            continue
+                    new_values.append(value)
+
+                old_value[:] = new_values
+                self.lifted = old_lifted
+            elif isinstance(old_value, ast.AST):
+                new_node = self.visit(old_value)
+                if new_node is None:
+                    delattr(node, field)
+                else:
+                    setattr(node, field, new_node)
+        return node
+
+    def visit_Lift(self, node: Lift):
+        self.generic_visit(node)
+        lam = node.lam
+        n = "lambda.{}".format(self.cnt)
+        self.cnt += 1
+        defun = ast.FunctionDef(n, lam.args, lam.body, [], None)
+        ast.copy_location(defun, node)
+        self.lifted.append(defun)
+        name = ast.Name(n)
+        ast.copy_location(name, node)
+        return name
+
+
+lift = Lifting().visit

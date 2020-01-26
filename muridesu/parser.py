@@ -9,7 +9,7 @@ __all__ = ['lexicals', 'run_lexer', 'mk_parser']
 
 
 
-def mk_parser(loc, DQString, METACLASS, join_string_by_dot, as_load, as_store, tuple_if_more_than_1, mk_tuple, list_, bin_reduce, extend, Operator):
+def mk_parser(loc, DQString, METACLASS, join_string_by_dot, as_load, as_store, tuple_if_more_than_1, mk_tuple, list_, bin_reduce, extend, Operator, Lift):
     from rbnf_rts.rts import AST as prim__mk__ast, Cons as prim__cons, _nil as prim__nil
     join__string__by__dot = join_string_by_dot
     as__load = as_load
@@ -5799,209 +5799,531 @@ def mk_parser(loc, DQString, METACLASS, join_string_by_dot, as_load, as_store, t
                         lcl_5 = (False, lcl_5)
                         lcl_4 = lcl_5
                     else:
-                        lcl_5 = parse_expr(prim__state, prim__tokens)
-                        _slot_3_check = lcl_5
-                        lcl_5 = _slot_3_check[0]
-                        lcl_5 = (lcl_5 is False)
+                        lcl_5 = prim__tokens.offset
+                        _off_2 = lcl_5
+                        lcl_5 = (len(prim__tokens.array) > (prim__tokens.offset + 0))
                         if lcl_5:
-                            lcl_5 = _slot_3_check
-                        else:
-                            lcl_6 = _slot_3_check[1]
-                            lcl_6 = lcl_6
-                            _slot_3 = lcl_6
-                            lcl_6 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
-                            lcl_7 = _slot_1
-                            lcl_8 = _slot_2
-                            lcl_7 = Lambda(lcl_7, lcl_8)
-                            lcl_6 = loc(lcl_6, lcl_7)
-                            _slot_local__1 = lcl_6
-                            lcl_6 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                            lcl_7 = prim__tokens.array[(prim__tokens.offset + 0)]
+                            lcl_7 = lcl_7.idint
+                            if (lcl_7 == 59):
+                                lcl_8 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_8
+                                lcl_8 = _slot_3_check[0]
+                                lcl_8 = (lcl_8 is False)
+                                if lcl_8:
+                                    lcl_8 = _slot_3_check
+                                else:
+                                    lcl_9 = _slot_3_check[1]
+                                    lcl_9 = lcl_9
+                                    _slot_3 = lcl_9
+                                    lcl_9 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_10 = _slot_1
+                                    lcl_11 = _slot_3
+                                    lcl_10 = Lambda(lcl_10, lcl_11)
+                                    lcl_10 = loc(lcl_9, lcl_10)
+                                    _slot_local__1 = lcl_10
+                                    lcl_10 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_8 = lcl_10
+                                lcl_6 = lcl_8
+                            elif (lcl_7 == 8):
+                                lcl_10 = parse_block(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_8 = Lift(lcl_8)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 60):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 37):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 33):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 62):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 65):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 64):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 66):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 63):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 51):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 3):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 71):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 69):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 70):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            elif (lcl_7 == 68):
+                                lcl_10 = parse_expr(prim__state, prim__tokens)
+                                _slot_3_check = lcl_10
+                                lcl_10 = _slot_3_check[0]
+                                lcl_10 = (lcl_10 is False)
+                                if lcl_10:
+                                    lcl_10 = _slot_3_check
+                                else:
+                                    lcl_11 = _slot_3_check[1]
+                                    lcl_11 = lcl_11
+                                    _slot_3 = lcl_11
+                                    lcl_11 = (_slot_0.lineno, _slot_0.colno, _slot_0.filename)
+                                    lcl_8 = _slot_1
+                                    lcl_9 = _slot_3
+                                    lcl_8 = Lambda(lcl_8, lcl_9)
+                                    lcl_11 = loc(lcl_11, lcl_8)
+                                    _slot_local__1 = lcl_11
+                                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                                    lcl_10 = lcl_11
+                                lcl_6 = lcl_10
+                            else:
+                                lcl_10 = (_off_2, 'expr lookahead failed')
+                                lcl_10 = prim__cons(lcl_10, prim__nil)
+                                lcl_10 = lcl_10
+                                lcl_10 = (False, lcl_10)
+                                lcl_6 = lcl_10
                             lcl_5 = lcl_6
+                        else:
+                            lcl_10 = (_off_2, 'expr got EOF')
+                            lcl_10 = prim__cons(lcl_10, prim__nil)
+                            lcl_10 = lcl_10
+                            lcl_10 = (False, lcl_10)
+                            lcl_5 = lcl_10
                         lcl_4 = lcl_5
                     lcl_3 = lcl_4
                 lcl_1 = lcl_3
             elif (lcl_2 == 62):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 65):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 64):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 66):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 63):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 51):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 3):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 71):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 69):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 70):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             elif (lcl_2 == 68):
-                lcl_3 = parse_or(prim__state, prim__tokens)
-                _slot_0_check = lcl_3
-                lcl_3 = _slot_0_check[0]
-                lcl_3 = (lcl_3 is False)
-                if lcl_3:
-                    lcl_3 = _slot_0_check
+                lcl_10 = parse_or(prim__state, prim__tokens)
+                _slot_0_check = lcl_10
+                lcl_10 = _slot_0_check[0]
+                lcl_10 = (lcl_10 is False)
+                if lcl_10:
+                    lcl_10 = _slot_0_check
                 else:
-                    lcl_4 = _slot_0_check[1]
-                    lcl_4 = lcl_4
-                    _slot_0 = lcl_4
-                    lcl_4 = _slot_0
-                    _slot_local__1 = lcl_4
-                    lcl_4 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
-                    lcl_3 = lcl_4
-                lcl_1 = lcl_3
+                    lcl_11 = _slot_0_check[1]
+                    lcl_11 = lcl_11
+                    _slot_0 = lcl_11
+                    lcl_11 = _slot_0
+                    _slot_local__1 = lcl_11
+                    lcl_11 = lr_loop_expr(_slot_local__1, prim__state, prim__tokens)
+                    lcl_10 = lcl_11
+                lcl_1 = lcl_10
             else:
-                lcl_3 = (_off_0, 'expr lookahead failed')
-                lcl_3 = prim__cons(lcl_3, prim__nil)
-                lcl_3 = lcl_3
-                lcl_3 = (False, lcl_3)
-                lcl_1 = lcl_3
+                lcl_10 = (_off_0, 'expr lookahead failed')
+                lcl_10 = prim__cons(lcl_10, prim__nil)
+                lcl_10 = lcl_10
+                lcl_10 = (False, lcl_10)
+                lcl_1 = lcl_10
             lcl_0 = lcl_1
         else:
             lcl_1 = (_off_0, 'expr got EOF')

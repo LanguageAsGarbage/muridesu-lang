@@ -66,7 +66,8 @@ stmt : 'func' Ident args block               { loc(@0, FunctionDef($1, $2, $3, [
       ;
 
 
-expr  : 'fn' args  '->' expr                         { loc(@0, Lambda($1, $2)) }
+expr  : 'fn' args  '->' expr                         { loc(@0, Lambda($1, $3)) }
+      | 'fn' args '->' block                         { loc(@0, Lift(Lambda($1, $3))) }
       | expr 'if' expr 'else' expr                   { loc(@1, IfExp($0, $2, $4)) }
       | or                                           { $0 }
       ;
@@ -128,7 +129,6 @@ factor : '-' factor { loc(@0, UnaryOp(USub(), $1)) }
        | '~' factor { loc(@0, UnaryOp(Invert(), $1)) }
        | yield { $0 }
        ;
-
 
 yield :
     | 'yield' expr               { loc(@0, Yield(tuple_if_more_than_1($1))) }
